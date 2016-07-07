@@ -8,6 +8,7 @@
 
 #import "TsyIndexViewController.h"
 #import "UIColor+Hex.h"
+#import "TsyVideoViewController.h"
 
 @interface TsyIndexViewController ()
 
@@ -25,8 +26,8 @@
 
 // 初始化页面
 - (void)initView {
-    // 标题
-    self.title = @"首页";
+    // 隐藏导航栏
+    [self.navigationController setNavigationBarHidden:YES];
     
     // 跳转按钮
     UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -37,10 +38,20 @@
     nextBtn.backgroundColor = [UIColor colorWithHexString:@"#66c036"];
     
     // 位置
-    nextBtn.center = self.view.center;
+    nextBtn.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
+    [nextBtn sizeToFit];
     
+    // 事件
+    [nextBtn addTarget:self action:@selector(nextClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:nextBtn];
+}
+
+// 下一页
+- (IBAction)nextClick:(id)sender {
+    TsyVideoViewController *videoView = [[TsyVideoViewController alloc] init];
+    
+    [self.navigationController pushViewController:videoView animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
